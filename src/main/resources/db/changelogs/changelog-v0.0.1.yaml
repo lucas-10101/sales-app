@@ -1,0 +1,72 @@
+databaseChangeLog:
+  - changeSet:
+      id: v0.0.1-1
+      author: lucas-10101
+      comment: "Users table, admin initial user"
+      preConditions:
+        changeSetExecuted:
+          id: db-start
+          author: lucas-10101
+      changes:
+        - createTable:
+            tableName: users
+            remarks: "Creating users table"
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(128)
+              - column:
+                  name: password
+                  type: char(60)
+              - column:
+                  name: active
+                  type: boolean
+              - column:
+                  name: created_at
+                  type: datetime
+              - column:
+                  name: created_by
+                  type: int
+              - column:
+                  name: updated_at
+                  type: datetime
+              - column:
+                  name: updated_by
+                  type: int
+        - createIndex:
+            tableName: users
+            indexName: users_id
+            unique: true
+            clustered: true
+            columns:
+              - column:
+                  name: id
+        - createIndex:
+            tableName: users
+            indexName: users_username
+            unique: true
+            columns:
+              - column:
+                  name: username
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: admin
+              - column:
+                  name: password
+                  value: "$2a$10$/grTSXCzdwxyNieIJ6QQX.PMBZGlVp155OpSRRIkJQQuqAnomqHP."
+              - column:
+                  name: active
+                  value: true
+                  

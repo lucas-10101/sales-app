@@ -1,4 +1,4 @@
-package myprojects.salesapp.models.enums.jpa;
+package myprojects.salesapp.data.jpa;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

@@ -1,1 +1,0 @@
-package myprojects.salesapp.models.enums.jpa;
