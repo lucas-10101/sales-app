@@ -10,21 +10,17 @@ import myprojects.salesapp.models.enums.ApplicationRoles;
 @Converter(autoApply = true)
 public class UserRolesAttributeConverter implements AttributeConverter<ApplicationRoles, Integer> {
 
-	@Override
-	public Integer convertToDatabaseColumn(ApplicationRoles attribute) {
-		return attribute != null ? attribute.getApplicationRoleId() : null;
-	}
+    @Override
+    public Integer convertToDatabaseColumn(ApplicationRoles attribute) {
+        return attribute != null ? attribute.getApplicationRoleId() : null;
+    }
 
-	@Override
-	public ApplicationRoles convertToEntityAttribute(Integer dbData) {
-		if (dbData == null)
-			return null;
+    @Override
+    public ApplicationRoles convertToEntityAttribute(Integer dbData) {
+        if (dbData == null)
+            return null;
 
-		for (var role : ApplicationRoles.values()) {
-			if (role.getApplicationRoleId() == dbData)
-				return role;
-		}
-		throw new RuntimeException("Application role with id " + dbData + " not found!");
-	}
+        return ApplicationRoles.getByRoleId(dbData);
+    }
 
 }

@@ -7,7 +7,9 @@ databaseChangeLog:
         changeSetExecuted:
           id: db-start
           author: lucas-10101
+          
       changes:
+        # Users table
         - createTable:
             tableName: users
             remarks: "Creating users table"
@@ -24,9 +26,14 @@ databaseChangeLog:
               - column:
                   name: username
                   type: varchar(128)
+                  constraints:
+                    nullable: false
+                    unique: true
               - column:
                   name: password
                   type: char(60)
+                  constraints:
+                    nullable: false
               - column:
                   name: active
                   type: boolean
@@ -42,6 +49,7 @@ databaseChangeLog:
               - column:
                   name: updated_by
                   type: int
+                  
         - createIndex:
             tableName: users
             indexName: users_id
@@ -50,6 +58,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
+                  
         - createIndex:
             tableName: users
             indexName: users_username
@@ -57,6 +66,61 @@ databaseChangeLog:
             columns:
               - column:
                   name: username
+                  
+        - addForeignKeyConstraint:
+            constraintName: fk_users_created_by
+            baseTableName: users
+            baseColumnNames: created_by
+            referencedTableName: users
+            referencedColumnNames: id
+                  
+        - addForeignKeyConstraint:
+            constraintName: fk_users_updated_by
+            baseTableName: users
+            baseColumnNames: updated_by
+            referencedTableName: users
+            referencedColumnNames: id
+            
+        # User roles table
+        - createTable:
+            tableName: user_roles
+            remarks: "Creating users table"
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    
+        - addUniqueConstraint:  
+            tableName:  user_roles  
+            columnNames:  user_id, role_id  
+            constraintName:  un_user_roles_user_id_role_id
+            validate:  true
+                  
+        - addForeignKeyConstraint:
+            constraintName: fk_user_roles_user_id
+            baseTableName: user_roles
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+        
+        #Initial user setup, username: admin, password: admin
+        
         - insert:
             tableName: users
             columns:
@@ -69,4 +133,14 @@ databaseChangeLog:
               - column:
                   name: active
                   value: true
+                  
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: role_id
+                  value: 1
                   
