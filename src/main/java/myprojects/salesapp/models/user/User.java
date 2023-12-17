@@ -1,13 +1,16 @@
 package myprojects.salesapp.models.user;
 
-import org.springframework.data.jpa.domain.AbstractAuditable;
+import java.util.LinkedList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import myprojects.salesapp.data.AuditableEntity;
 
 /**
  * User model.
@@ -16,12 +19,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "users")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-public class User extends AbstractAuditable<User, Integer> {
-
-	@Id
-	@EqualsAndHashCode.Include
-	@Column(insertable = false, updatable = false)
-	private Integer id;
+public class User extends AuditableEntity<User, Integer> {
 
 	@Column(updatable = false)
 	private String username;
@@ -30,4 +28,7 @@ public class User extends AbstractAuditable<User, Integer> {
 	private String password;
 
 	private boolean active;
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private final List<UserRole> roles = new LinkedList<>();
 }

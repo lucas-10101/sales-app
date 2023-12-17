@@ -1,5 +1,6 @@
 package myprojects.salesapp.configuration.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -22,15 +23,21 @@ public class ApplicationUserDetails implements UserDetails {
 
 	private boolean active;
 
-	public ApplicationUserDetails(User user) {
+	private Integer userId;
+
+	private final Collection<GrantedAuthority> authorities;
+
+	public ApplicationUserDetails(User user, String... authorities) {
 		this.username = user.getUsername();
 		this.password = user.getPassword();
 		this.active = user.isActive();
+		this.userId = user.getId();
+		this.authorities = new ArrayList<>(user.getRoles());
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return this.authorities;
 	}
 
 	@Override

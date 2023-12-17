@@ -1,5 +1,7 @@
 package myprojects.salesapp.models.user;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -14,7 +16,9 @@ import myprojects.salesapp.models.enums.ApplicationRoles;
 @Data
 @Entity
 @Table(name = "user_roles")
-public class UserRole {
+public class UserRole implements GrantedAuthority {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(insertable = false, updatable = false)
@@ -24,4 +28,9 @@ public class UserRole {
 	private User user;
 
 	private ApplicationRoles role;
+
+	@Override
+	public String getAuthority() {
+		return role.name();
+	}
 }
