@@ -48,6 +48,7 @@ public class ApplicationHttpSecurity {
         if (Arrays.asList(env.getActiveProfiles()).contains("dev"))
             allowDevelopmentUrls(request);
 
+        request.anyRequest().hasAnyRole("LOGIN");
         request.anyRequest().authenticated();
     }
 

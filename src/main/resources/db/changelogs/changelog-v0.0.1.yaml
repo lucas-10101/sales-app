@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: v0.0.1-1
+      id: v0.0.1
       author: lucas-10101
       comment: "Users table, admin initial user"
       preConditions:
@@ -9,7 +9,9 @@ databaseChangeLog:
           author: lucas-10101
           
       changes:
+      
         # Users table
+        
         - createTable:
             tableName: users
             remarks: "Creating users table"
@@ -82,6 +84,7 @@ databaseChangeLog:
             referencedColumnNames: id
             
         # User roles table
+        
         - createTable:
             tableName: user_roles
             remarks: "Creating users table"
