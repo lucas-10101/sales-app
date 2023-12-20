@@ -146,4 +146,139 @@ databaseChangeLog:
               - column:
                   name: role_id
                   value: 1
+            
+        # Brands, category and subcategory tables
+        
+        - createTable:
+            tableName: brands
+            remarks: "Creating brands table"
+            columns:
+              - column:
+                  name: id
+                  type: smallint
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(60)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
+              - column:
+                  name: created_by
+                  type: int
+              - column:
+                  name: updated_at
+                  type: datetime
+              - column:
+                  name: updated_by
+                  type: int
+                  
+        - createIndex:
+            tableName: brands
+            indexName: brands_id
+            unique: true
+            clustered: true
+            columns:
+              - column:
+                  name: id
+        
+        - createTable:
+            tableName: categories
+            remarks: "Creating categories table"
+            columns:
+              - column:
+                  name: id
+                  type: smallint
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(60)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
+              - column:
+                  name: created_by
+                  type: int
+              - column:
+                  name: updated_at
+                  type: datetime
+              - column:
+                  name: updated_by
+                  type: int
+                  
+        - createIndex:
+            tableName: categories
+            indexName: categories_id
+            unique: true
+            clustered: true
+            columns:
+              - column:
+                  name: id
+        
+        - createTable:
+            tableName: subcategories
+            remarks: "Creating subcategories table"
+            columns:
+              - column:
+                  name: id
+                  type: smallint
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(60)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: category_id
+                  type: smallint
+              - column:
+                  name: created_at
+                  type: datetime
+              - column:
+                  name: created_by
+                  type: int
+              - column:
+                  name: updated_at
+                  type: datetime
+              - column:
+                  name: updated_by
+                  type: int
+                  
+        - createIndex:
+            tableName: subcategories
+            indexName: subcategories_id
+            unique: true
+            clustered: true
+            columns:
+              - column:
+                  name: id
+                  
+        - addForeignKeyConstraint:
+            constraintName: fk_subcategories_category_id
+            baseTableName: subcategories
+            baseColumnNames: category_id
+            referencedTableName: categories
+            referencedColumnNames: id
                   

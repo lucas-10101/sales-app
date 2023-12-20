@@ -49,7 +49,6 @@ public class ApplicationHttpSecurity {
             allowDevelopmentUrls(request);
 
         request.anyRequest().hasAnyRole("LOGIN");
-        request.anyRequest().authenticated();
     }
 
     protected void allowDevelopmentUrls(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry request) {
