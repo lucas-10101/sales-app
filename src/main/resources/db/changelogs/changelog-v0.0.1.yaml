@@ -1,0 +1,149 @@
+databaseChangeLog:
+  - changeSet:
+      id: v0.0.1
+      author: lucas-10101
+      comment: "Users table, admin initial user"
+      preConditions:
+        changeSetExecuted:
+          id: db-start
+          author: lucas-10101
+          
+      changes:
+      
+        # Users table
+        
+        - createTable:
+            tableName: users
+            remarks: "Creating users table"
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(128)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: char(60)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: active
+                  type: boolean
+              - column:
+                  name: created_at
+                  type: datetime
+              - column:
+                  name: created_by
+                  type: int
+              - column:
+                  name: updated_at
+                  type: datetime
+              - column:
+                  name: updated_by
+                  type: int
+                  
+        - createIndex:
+            tableName: users
+            indexName: users_id
+            unique: true
+            clustered: true
+            columns:
+              - column:
+                  name: id
+                  
+        - createIndex:
+            tableName: users
+            indexName: users_username
+            unique: true
+            columns:
+              - column:
+                  name: username
+                  
+        - addForeignKeyConstraint:
+            constraintName: fk_users_created_by
+            baseTableName: users
+            baseColumnNames: created_by
+            referencedTableName: users
+            referencedColumnNames: id
+                  
+        - addForeignKeyConstraint:
+            constraintName: fk_users_updated_by
+            baseTableName: users
+            baseColumnNames: updated_by
+            referencedTableName: users
+            referencedColumnNames: id
+            
+        # User roles table
+        
+        - createTable:
+            tableName: user_roles
+            remarks: "Creating users table"
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  startWith: 1
+                  incrementBy: 1
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    
+        - addUniqueConstraint:  
+            tableName:  user_roles  
+            columnNames:  user_id, role_id  
+            constraintName:  un_user_roles_user_id_role_id
+            validate:  true
+                  
+        - addForeignKeyConstraint:
+            constraintName: fk_user_roles_user_id
+            baseTableName: user_roles
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+        
+        #Initial user setup, username: admin, password: admin
+        
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: admin
+              - column:
+                  name: password
+                  value: "$2a$10$/grTSXCzdwxyNieIJ6QQX.PMBZGlVp155OpSRRIkJQQuqAnomqHP."
+              - column:
+                  name: active
+                  value: true
+                  
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: role_id
+                  value: 1
+                  

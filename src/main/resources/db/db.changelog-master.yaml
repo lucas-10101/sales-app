@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: "db-start"
+      author: lucas-10101
+      changes:
+        - tagDatabase:
+            tag: v0.0.1
+  - include:
+      file: db/changelogs/changelog-v0.0.1.yaml
