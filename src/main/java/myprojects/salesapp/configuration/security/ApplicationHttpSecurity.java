@@ -7,11 +7,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
+@EnableWebSecurity
 public class ApplicationHttpSecurity {
 
     @Autowired
@@ -20,15 +23,11 @@ public class ApplicationHttpSecurity {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+        http.authorizeHttpRequests(request -> authorizeHttpRequests(request));
+
         http.csrf(csrf -> {
             csrf.disable();
         });
-
-        http.cors(cors -> {
-            cors.disable();
-        });
-
-        http.authorizeHttpRequests(request -> authorizeHttpRequests(request));
 
         http.sessionManagement(sessionManagement -> {
             sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -48,7 +47,8 @@ public class ApplicationHttpSecurity {
         if (Arrays.asList(env.getActiveProfiles()).contains("dev"))
             allowDevelopmentUrls(request);
 
-        request.anyRequest().hasAnyRole("LOGIN");
+        request.requestMatchers(new AntPathRequestMatcher("/test", "GET")).permitAll();
+        request.anyRequest().hasAnyAuthority("LOGIN");
     }
 
     protected void allowDevelopmentUrls(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry request) {
