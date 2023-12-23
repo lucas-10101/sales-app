@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import jakarta.transaction.Transactional;
-import myprojects.salesapp.configuration.security.ApplicationUserDetails;
+import myprojects.salesapp.models.internal.ApplicationUserDetails;
 import myprojects.salesapp.models.user.User;
 import myprojects.salesapp.services.user.UserService;
 

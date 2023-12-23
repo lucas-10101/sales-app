@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import myprojects.salesapp.data.user.UserRepository;
+import myprojects.salesapp.models.internal.ApplicationUserDetails;
 import myprojects.salesapp.models.user.User;
 
 /**

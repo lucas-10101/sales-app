@@ -8,5 +8,7 @@
 spring:
   liquibase:
     change-log: classpath:/db/db.changelog-master.yaml
+  messages:
+    basename: internationalization/messages
   profiles:
     active: ${appmode:dev}

@@ -1,4 +1,4 @@
-package myprojects.salesapp.configuration.security;
+package myprojects.salesapp.models.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;

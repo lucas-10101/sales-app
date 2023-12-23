@@ -3,6 +3,7 @@ package myprojects.salesapp.models.user;
 import java.util.LinkedList;
 import java.util.List;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,16 +20,17 @@ import myprojects.salesapp.data.AuditableEntity;
 @Entity
 @Table(name = "users")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-public class User extends AuditableEntity<User, Integer> {
+public class User extends AuditableEntity<Integer> {
 
-	@Column(updatable = false)
-	private String username;
+    @Column(updatable = false)
+    private String username;
 
-	@Column(updatable = false)
-	private String password;
+    @Basic(fetch = FetchType.LAZY)
+    @Column(updatable = false)
+    private String password;
 
-	private boolean active;
+    private boolean active;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private final List<UserRole> roles = new LinkedList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private final List<UserRole> roles = new LinkedList<>();
 }
