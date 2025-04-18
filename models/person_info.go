@@ -1,6 +1,10 @@
-package entities
+package models
 
 type PersonInfo struct {
-	Id   string
-	Name string
+	Id           string
+	Name         string
+	ContactEmail string
+	ContactPhone string
+
+	AddressId string
 }

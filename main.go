@@ -6,5 +6,5 @@ import (
 
 func main() {
 	conf.SetupLogger()
-
+	conf.StartServer()
 }

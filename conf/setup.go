@@ -6,6 +6,11 @@ import (
 )
 
 func SetupLogger() {
-	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, nil)))
+
+	options := &slog.HandlerOptions{
+		Level: slog.LevelDebug,
+	}
+
+	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, options)))
 
 }
