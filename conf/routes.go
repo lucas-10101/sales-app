@@ -12,7 +12,10 @@ func GetDeclaredRoutes() *mux.Router {
 
 	router := mux.NewRouter()
 
-	router.Use(middlewares.ContentTypeAwareMiddleware)
+	router.Use(
+		middlewares.RequestDurationAware,
+		middlewares.ContentTypeAwareMiddleware,
+	)
 
 	sellersSubRoutes := router.PathPrefix("/sellers").Subrouter()
 	sellersSubRoutes.Methods(http.MethodGet).HandlerFunc(controllers.NewSeller)
